@@ -13,11 +13,12 @@ class Artemis:
     aggregations over multiple patients.
     """
 
-    def __init__(self, path, virtuals={}, filter=None):
+    def __init__(self, path, virtuals={}, filter=None, snooze_duration=None):
         self.patients = []
         self.path = path
         self.virtuals = virtuals
         self.filter = filter
+        self.snooze_duration = snooze_duration
 
         logging.basicConfig(filename='artemis.log', level=logging.INFO)
 
@@ -42,8 +43,8 @@ class Artemis:
 
         self.patients = [
             Patient(
-                patientunitstayid, eicuVitalPeriodic, eicuPatient,
-                eicuDiagnosis, eicuMedications)
+                patientunitstayid, self.snooze_duration,
+                eicuVitalPeriodic, eicuPatient, eicuDiagnosis, eicuMedications)
             for patientunitstayid in tqdm(puids, desc="Creating Patient objects")]
 
         return self

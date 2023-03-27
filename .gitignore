@@ -7,3 +7,6 @@ examples/artemis.log
 # build files
 dist
 src/hpi_ch_artemis.egg-info
+
+# cached files in __pycache__
+src/artemis/__pycache__

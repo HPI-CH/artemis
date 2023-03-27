@@ -12,7 +12,10 @@ class Patient:
 
     # Instance creation
 
-    def __init__(self, patientunitstayid, eicuVitalPeriodic, eicuPatient, eicuDiagnosis, eicuMedication):
+    def __init__(
+        self, patientunitstayid, snooze_duration,
+        eicuVitalPeriodic, eicuPatient, eicuDiagnosis, eicuMedication):
+
         self.patientunitstayid = patientunitstayid
 
         self.statics = self.__extract_statics(eicuPatient)
@@ -21,7 +24,7 @@ class Patient:
 
         vitals = self.__extract_vitals(eicuVitalPeriodic)
         self.parameters = {
-            parameter: Parameter(self, parameter, vitals[parameter])
+            parameter: Parameter(self, parameter, vitals[parameter], snooze_duration)
             for parameter in vitals.columns}
 
     def __extract_statics(self, eicuPatient):

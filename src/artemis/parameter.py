@@ -8,11 +8,27 @@ tqdm.pandas()
 class Parameter:
     """This class handles a single parameters (heart rate, blood pressure) of a 
     single patient.
+
+    Arguments:
+    patient -- back-reference to the Patient object holding the Parameter
+    name -- name of the Parameter (heartrate, systemicsystolic, sao2, ...)
+    measurement -- pandas Series of time-indexed measurements for the Parameter
+    snooze_duration -- how long alarms are paused at this ICU, can be:
+        int -- number of minutes
+        str -- pandas DateOffset frequency string
+        None -- use data set's sampling frequency
     """
 
-    def __init__(self, patient, name, measurements):
+    def __init__(self, patient, name, measurements, snooze_duration):
         self.patient = patient
         self.name = name
+        
+        if isinstance(snooze_duration, int):
+            snooze_duration = f'{snooze_duration}min'
+        
+        if snooze_duration is not None:
+            measurements = measurements.resample(snooze_duration, origin='start')
+       
         self.measurements = measurements.interpolate()
 
     def __repr__(self):

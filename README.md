@@ -1,4 +1,4 @@
-# ARTEMIS: An Alarm Threshold Mining System
+# ARTEMIS: An Alarm Threshold and Policy Mining System for the Intensive Care Unit
 
 This is ARTEMIS, a system for finding suitable alarm policies in intensive care units.
 
